@@ -1,0 +1,13 @@
+{
+  "name": "tp1-daemon",
+  "version": "1.0.0",
+  "description": "Linux daemon service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "daemon": "node daemon.js" 
+  },
+  "author": "",
+  "license": "ISC"
+}
