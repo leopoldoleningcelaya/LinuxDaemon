@@ -4,5 +4,6 @@ Apliación desarrollada para el Trabajo Práctico N°1 de la materia Servicios d
 Teniendo node instalado y estando en una distribución de Linux:
 
 ```sh
+npm install
 npm run daemon     
 ```
