@@ -1,13 +1,14 @@
 const child_process = require('child_process');
+const fs = require('fs')
 
 function start() {
     if (process.env.__daemon) {
         return process.pid;
     }
 
-    let stdin = null;
-    let stdout = null;
-    let stderr = 2;
+    let stdin = fs.openSync('/dev/null', 'w');
+    let stdout = stdin;
+    let stderr = stdin;
     let env = process.env
     env.__daemon = true
 
