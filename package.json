@@ -5,12 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "daemon": "node daemon.js"
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dbus": "^1.0.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pololeningcelaya/LinuxDaemon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pololeningcelaya/LinuxDaemon/issues"
+  },
+  "homepage": "https://github.com/pololeningcelaya/LinuxDaemon#readme",
+  "keywords": []
 }

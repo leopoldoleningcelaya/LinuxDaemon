@@ -5,5 +5,5 @@ Teniendo node instalado y estando en una distribución de Linux:
 
 ```sh
 npm install
-npm run daemon     
+npm start    
 ```
