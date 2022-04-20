@@ -9,7 +9,7 @@ const bus = DBus.getBus('session');
 bus.getInterface(dbusServiceName, dbusObjectName, dbusInterfaceName, function(err, iface) {
     
     iface.on('pump', function(count) {
-        console.log(`Count: ${count}`);
+        console.log(`Count: ${count} <br/>`);
 	});
 });
 
@@ -17,11 +17,11 @@ bus.getInterface(dbusServiceName, dbusObjectName, dbusInterfaceName, function(er
 const app = require('express')();
 
 app.get('/', (req, res) => {;
-    res.send("<strong> Hello world! Im a daemon <strong/>")
+    res.send(fs.readFileSync('./src/log').toString());
 });
 
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
+    console.log(`Server listening on port ${port} <br/>`)
 });
 
 process.on('SIGTERM', function () {

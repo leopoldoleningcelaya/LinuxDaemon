@@ -17,7 +17,7 @@ function start() {
         detached: true
     };
     
-    let client_stdout = fs.openSync('./log', 'w');
+    let client_stdout = fs.openSync('./src/log', 'w');
     let clientOpt = {
         stdio: [dev_null, client_stdout, dev_null, 'ipc'],
         env: env,
