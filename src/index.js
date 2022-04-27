@@ -1,5 +1,5 @@
 const child_process = require('child_process');
-const fs = require('fs')
+const fs = require('fs');
 
 function start() {
     if (process.env.__daemon) {
@@ -17,9 +17,9 @@ function start() {
         detached: true
     };
     
-    let client_stdout = fs.openSync('/var/log/swlibrelog', 'w');
+    
     let clientOpt = {
-        stdio: [dev_null, client_stdout, dev_null, 'ipc'],
+        stdio: [dev_null, dev_null, dev_null, 'ipc'],
         env: env,
         cwd: process.cwd(),
         detached: true
