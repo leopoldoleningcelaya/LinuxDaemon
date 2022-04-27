@@ -1,4 +1,4 @@
-const dbus = require('dbus');
+const dbus = require('/usr/local/lib/node_modules/dbus');
 
 const dbusObjectName = '/swlibre/dbus/service';
 const dbusServiceName = 'swlibre.dbus.service';

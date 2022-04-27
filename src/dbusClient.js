@@ -1,5 +1,5 @@
-const dbus = require('dbus');
-const express = require('express');
+const dbus = require('/usr/local/lib/node_modules/dbus');
+const express = require('/usr/local/lib/node_modules/express');
 
 const dbusObjectName = '/swlibre/dbus/service';
 const dbusServiceName = 'swlibre.dbus.service';
@@ -25,6 +25,6 @@ app.listen(port, () => {
 }) ;
 
 process.on('SIGTERM', function () {
-    if (server === undefined) return
-    server.close();
+    if (app === undefined) return
+    app.close();
 });
