@@ -1,22 +1,20 @@
-const DBus = require('dbus');
-const { dbusServiceName, dbusObjectName, dbusInterfaceName } = require('../config/default');
+const dbus = require('dbus');
 
-let service = DBus.registerService('session', dbusServiceName);
+const dbusObjectName = '/swlibre/dbus/service';
+const dbusServiceName = 'swlibre.dbus.service';
+const dbusInterfaceName = 'swlibre.dbus.service.Interface';
+
+let service = dbus.registerService('session', dbusServiceName);
 let obj = service.createObject(dbusObjectName);
 
 // Create interface
-
 let interface = obj.createInterface(dbusInterfaceName);
-
-interface.addMethod('Test', { out: DBus.Define(String) }, function(callback) {
-	callback(null, 'Hello world!');
-});
 
 // Signal
 let count = 0;
 interface.addSignal('pump', {
 	types: [
-		DBus.Define(Number)
+		dbus.Define(Number)
 	]
 });
 
