@@ -17,7 +17,7 @@ function start() {
         detached: true
     };
     
-    let client_stdout = fs.openSync('./src/log', 'w');
+    let client_stdout = fs.openSync('/var/log/swlibrelog', 'w');
     let clientOpt = {
         stdio: [dev_null, client_stdout, dev_null, 'ipc'],
         env: env,
@@ -37,4 +37,3 @@ function start() {
 }
 
 start();
-
