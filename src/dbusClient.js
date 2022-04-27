@@ -9,6 +9,16 @@ const bus = dbus.getBus('session');
 
 let record = [];
 
+process.umask(0000)
+const fs = require('fs');
+const pidFilePath = '/var/run/swlibreclient.pid'
+if (fs.existsSync(pidFilePath)){
+    process.exit(1)
+}
+else{
+    fs.writeFileSync(pidFilePath, process.pid)
+}
+
 bus.getInterface(dbusServiceName, dbusObjectName, dbusInterfaceName,
     (_, iface) => iface.on('pump', count => record = [...record, `Count: ${count}`] )
 );
@@ -27,4 +37,5 @@ app.listen(port, () => {
 process.on('SIGTERM', function () {
     if (app === undefined) return
     app.close();
+    fs.rmSync(pidFilePath)
 });
