@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dbus": "^1.0.7"
+    "dbus": "^1.0.7",
+    "express": "^4.18.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pololeningcelaya/LinuxDaemon.git"

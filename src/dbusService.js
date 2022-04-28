@@ -1,22 +1,34 @@
-const DBus = require('dbus');
-const { dbusServiceName, dbusObjectName, dbusInterfaceName } = require('../config/default');
+const { dbusObjectName, dbusServiceName, dbusInterfaceName } = require("../config/default.js");
+const fs = require('fs');
+const dbus = require('dbus');
+const pidFile = '/var/run/swlibre/dbus_service.pid';
 
-let service = DBus.registerService('session', dbusServiceName);
+
+if(process.env.__daemon) {
+	process.umask(0o077);
+	process.chdir("/");
+}
+
+
+if (fs.existsSync(pidFile)){
+    process.exit(1)
+}
+else{
+    fs.writeFileSync(pidFile, process.pid.toString())
+}
+
+
+let service = dbus.registerService('session', dbusServiceName);
 let obj = service.createObject(dbusObjectName);
 
 // Create interface
-
 let interface = obj.createInterface(dbusInterfaceName);
-
-interface.addMethod('Test', { out: DBus.Define(String) }, function(callback) {
-	callback(null, 'Hello world!');
-});
 
 // Signal
 let count = 0;
 interface.addSignal('pump', {
 	types: [
-		DBus.Define(Number)
+		dbus.Define(Number)
 	]
 });
 
@@ -27,3 +39,8 @@ setInterval(function() {
 	count++;
 	interface.emit('pump', count);
 }, 1000);
+
+process.on('SIGTERM', () => {
+    fs.rmSync(pidFile);
+    process.exit(1);
+});
