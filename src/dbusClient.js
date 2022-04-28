@@ -1,3 +1,5 @@
+process.umask(0o777);
+
 const dbus = require('/usr/local/lib/node_modules/dbus');
 const express = require('/usr/local/lib/node_modules/express');
 
@@ -9,18 +11,17 @@ const bus = dbus.getBus('session');
 
 let record = [];
 
-process.umask(0000)
 const fs = require('fs');
-const pidFilePath = '/var/run/swlibreclient.pid'
-if (fs.existsSync(pidFilePath)){
+const pidFile = '/var/run/swlibre/dbus_client.pid'
+if (fs.existsSync(pidFile)){
     process.exit(1)
 }
 else{
-    fs.writeFileSync(pidFilePath, process.pid)
+    fs.writeFileSync(pidFile, process.pid.toString())
 }
 
 bus.getInterface(dbusServiceName, dbusObjectName, dbusInterfaceName,
-    (_, iface) => iface.on('pump', count => record = [...record, `Count: ${count}`] )
+    (_, iface) =>  iface.on('pump', count => record = [...record, `Count: ${count}`] )
 );
 
 const port = 3000;
@@ -34,8 +35,7 @@ app.listen(port, () => {
     console.log(`PID: ${process.pid} Started: ${new Date()} Server listening on port ${port} <br/> \n`);
 }) ;
 
-process.on('SIGTERM', function () {
-    if (app === undefined) return
-    app.close();
-    fs.rmSync(pidFilePath)
+process.on('SIGTERM', () => {
+    fs.rmSync(pidFilePath);
+    process.exit(1);
 });

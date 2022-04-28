@@ -1,3 +1,13 @@
+process.umask(0o777);
+const fs = require('fs');
+const pidFile = '/var/run/swlibre/dbus_service.pid'
+if (fs.existsSync(pidFile)){
+    process.exit(1)
+}
+else{
+    fs.writeFileSync(pidFile, process.pid.toString())
+}
+
 const dbus = require('/usr/local/lib/node_modules/dbus');
 
 const dbusObjectName = '/swlibre/dbus/service';

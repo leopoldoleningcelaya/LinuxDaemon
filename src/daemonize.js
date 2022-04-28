@@ -10,7 +10,7 @@ module.exports = function daemonize(scriptFile, stdout_route) {
     const opt = {
         stdio: [dev_null, stdout, dev_null, 'ipc'],
         env: env,
-        cwd: '.',
+        cwd: process.cwd(),
         detached: true
     };
 
