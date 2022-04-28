@@ -1,5 +1,7 @@
 const fs = require('fs');
 const pidFile = '/var/run/swlibre/dbus_service.pid'
+
+process.umask(0o077)
 if (fs.existsSync(pidFile)){
     process.exit(1)
 }

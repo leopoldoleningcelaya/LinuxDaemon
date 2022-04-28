@@ -11,6 +11,8 @@ let record = [];
 
 const fs = require('fs');
 const pidFile = '/var/run/swlibre/dbus_client.pid'
+
+process.umask(0o077)
 if (fs.existsSync(pidFile)){
     process.exit(1)
 }
