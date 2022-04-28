@@ -1,5 +1,3 @@
-process.umask(0o777);
-
 const dbus = require('/usr/local/lib/node_modules/dbus');
 const express = require('/usr/local/lib/node_modules/express');
 
@@ -36,6 +34,6 @@ app.listen(port, () => {
 }) ;
 
 process.on('SIGTERM', () => {
-    fs.rmSync(pidFilePath);
+    fs.rmSync(pidFile);
     process.exit(1);
 });

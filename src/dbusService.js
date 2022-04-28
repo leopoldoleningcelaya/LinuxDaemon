@@ -1,4 +1,3 @@
-process.umask(0o777);
 const fs = require('fs');
 const pidFile = '/var/run/swlibre/dbus_service.pid'
 if (fs.existsSync(pidFile)){
@@ -35,3 +34,8 @@ setInterval(function() {
 	count++;
 	interface.emit('pump', count);
 }, 1000);
+
+process.on('SIGTERM', () => {
+    fs.rmSync(pidFile);
+    process.exit(1);
+});
