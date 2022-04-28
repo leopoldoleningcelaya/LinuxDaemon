@@ -1,7 +1,15 @@
+const { dbusObjectName, dbusServiceName, dbusInterfaceName } = require("../config/default.js");
 const fs = require('fs');
-const pidFile = '/var/run/swlibre/dbus_service.pid'
+const dbus = require('dbus');
+const pidFile = '/var/run/swlibre/dbus_service.pid';
 
-process.umask(0o077)
+
+if(process.env.__daemon) {
+	process.umask(0o077);
+	process.chdir("/");
+}
+
+
 if (fs.existsSync(pidFile)){
     process.exit(1)
 }
@@ -9,11 +17,6 @@ else{
     fs.writeFileSync(pidFile, process.pid.toString())
 }
 
-const dbus = require('/usr/local/lib/node_modules/dbus');
-
-const dbusObjectName = '/swlibre/dbus/service';
-const dbusServiceName = 'swlibre.dbus.service';
-const dbusInterfaceName = 'swlibre.dbus.service.Interface';
 
 let service = dbus.registerService('session', dbusServiceName);
 let obj = service.createObject(dbusObjectName);

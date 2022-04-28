@@ -1,24 +1,25 @@
-const dbus = require('/usr/local/lib/node_modules/dbus');
-const express = require('/usr/local/lib/node_modules/express');
-
-const dbusObjectName = '/swlibre/dbus/service';
-const dbusServiceName = 'swlibre.dbus.service';
-const dbusInterfaceName = 'swlibre.dbus.service.Interface';
-
-const bus = dbus.getBus('session');
-
-let record = [];
-
+const { dbusObjectName, dbusServiceName, dbusInterfaceName } = require("../config/default.js");
 const fs = require('fs');
-const pidFile = '/var/run/swlibre/dbus_client.pid'
+const dbus = require('dbus');
+const express = require('express');
+const pidFile = '/var/run/swlibre/dbus_client.pid';
 
-process.umask(0o077)
+if(process.env.__daemon) {
+	process.umask(0o077);
+    process.chdir("/");
+}
+
+
+
 if (fs.existsSync(pidFile)){
     process.exit(1)
 }
 else{
     fs.writeFileSync(pidFile, process.pid.toString())
 }
+
+const bus = dbus.getBus('session');
+let record = [];
 
 bus.getInterface(dbusServiceName, dbusObjectName, dbusInterfaceName,
     (_, iface) =>  iface.on('pump', count => record = [...record, `Count: ${count}`] )

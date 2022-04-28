@@ -5,7 +5,8 @@ module.exports = function daemonize(scriptFile, stdout_route) {
 
     const dev_null = fs.openSync('/dev/null');
     const stdout = fs.openSync((stdout_route || '/dev/null'), 'w');
-    const env = process.env
+    const env = process.env;
+    process.env.__daemon = true;
     
     const opt = {
         stdio: [dev_null, stdout, dev_null, 'ipc'],
